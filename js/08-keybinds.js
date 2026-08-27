@@ -2,7 +2,7 @@
 // Keyboard Shortcuts
 // ============================================================
 document.addEventListener('keydown', function(e) {
-    if (e.target.matches('input[type="text"], textarea, select, [contenteditable="true"]')) return;
+    if (e.target.matches('input, textarea, select, [contenteditable="true"]')) return;
 
     var key = e.key;
     // 0 always jumps to start of video
