@@ -10,7 +10,6 @@
 <body>
 <header style="position:relative;">
 <h1>Dance Mirror</h1>
-    <p>Open your dance practice videos — mirror, loop, and perfect your moves</p>
 </header>
 
 <div class="container">
@@ -19,13 +18,6 @@
         <h2 style="display:flex;align-items:center;gap:10px;">
             <span>My Videos</span>
             <span style="display:flex;align-items:center;gap:8px;margin-left:auto;">
-                <span id="compareTargetLabel" style="display:none;font-size:0.72rem;color:var(--accent);">
-                    Select for:
-                    <button class="btn btn-outline btn-sm" id="targetABtn" style="padding:2px 8px;font-size:0.7rem;">A</button>
-                    <button class="btn btn-outline btn-sm" id="targetBBtn" style="padding:2px 8px;font-size:0.7rem;">B</button>
-                </span>
-                <button class="btn btn-outline btn-sm" id="compareBtn" style="display:none;">Compare Mode: Off</button>
-                <button class="btn btn-outline btn-sm" id="createMixBtn">Create Mix</button>
                 <button class="btn btn-outline btn-sm" id="cutBtn">Cut Video</button>
             </span>
         </h2>
@@ -34,73 +26,10 @@
             <input type="file" id="videoFileInput" accept="video/*" multiple hidden>
             <span id="uploadProgress" style="display:none;font-size:0.8rem;color:var(--accent);margin-left:4px;"></span>
             <span style="color:var(--text-muted);font-size:0.82rem;">or</span>
-            <input type="text" id="youtubeUrl" placeholder="Paste YouTube URL..." style="flex:1;min-width:180px;padding:8px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:0.85rem;outline:none;">
-            <button class="btn btn-outline btn-sm" id="youtubeBtn">Download</button>
+            <a href="https://cnvmp3.com" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm" style="text-decoration:none;">Get from YouTube <span style="color:var(--text-muted);font-size:0.78rem;">(cnvmp3.com)</span>↗</a>
         </div>
-        <div id="youtubeProgress" style="display:none;margin-top:8px;font-size:0.8rem;color:var(--accent);"></div>
         <ul class="video-list" id="videoList" style="margin-top:16px;"></ul>
-        <ul class="video-list" id="youtubeVideoList" style="margin-top:0;"></ul>
     </div>
-
-        <!-- Create Mix panel -->
-        <div id="mixPanel" class="card" style="display:none;">
-            <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
-                <h3 style="font-size:0.95rem;margin:0;color:var(--text-muted);">Create Mix</h3>
-                <button class="btn btn-outline btn-sm" id="mixCloseBtn" style="margin-left:auto;">Close</button>
-            </div>
-            <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:12px;">
-                <!-- Video source -->
-                <div style="flex:1;min-width:250px;padding:12px;background:var(--surface2);border-radius:8px;">
-                    <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:6px;font-weight:600;">Video Source</div>
-                    <div id="mixVideoLabel" style="font-size:0.8rem;color:var(--text);margin-bottom:6px;">None selected</div>
-                    <div style="display:flex;gap:6px;">
-                        <button class="btn btn-outline btn-sm" id="mixVideoLibraryBtn">Pick from Library</button>
-                        <button class="btn btn-outline btn-sm" id="mixVideoUploadBtn">Upload</button>
-                    </div>
-                    <input type="file" id="mixVideoFile" accept="video/*" hidden>
-                </div>
-                <!-- Audio source -->
-                <div style="flex:1;min-width:250px;padding:12px;background:var(--surface2);border-radius:8px;">
-                    <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:6px;font-weight:600;">Audio Source</div>
-                    <div id="mixAudioLabel" style="font-size:0.8rem;color:var(--text);margin-bottom:6px;">None selected</div>
-                    <div style="display:flex;gap:6px;">
-                        <button class="btn btn-outline btn-sm" id="mixAudioLibraryBtn">Pick from Library</button>
-                        <button class="btn btn-outline btn-sm" id="mixAudioUploadBtn">Upload</button>
-                    </div>
-                    <input type="file" id="mixAudioFile" accept="audio/*,.mp4,.mov,.webm,.mkv" hidden>
-                </div>
-            </div>
-            <video id="mixAudioVideo" playsinline style="display:none;"></video>
-            <div id="mixControls" style="display:none;">
-                <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-bottom:8px;">
-                    <div style="display:flex;align-items:center;gap:4px;">
-                        <span style="font-size:0.75rem;color:var(--text-muted);">Video Vol:</span>
-                        <input type="range" id="mixVideoVol" min="0" max="1.5" step="0.01" value="1" style="width:80px;">
-                        <span id="mixVideoVolVal" style="font-size:0.75rem;color:var(--text);width:36px;">100%</span>
-                    </div>
-                    <div style="display:flex;align-items:center;gap:4px;">
-                        <span style="font-size:0.75rem;color:var(--text-muted);">Audio Vol:</span>
-                        <input type="range" id="mixAudioVol" min="0" max="1.5" step="0.01" value="1" style="width:80px;">
-                        <span id="mixAudioVolVal" style="font-size:0.75rem;color:var(--text);width:36px;">100%</span>
-                    </div>
-                </div>
-                <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px;">
-                    <span style="font-size:0.75rem;color:var(--text-muted);">Offset:</span>
-                    <button class="btn btn-outline btn-sm" id="mixOffsetFineLeftBtn" title="-1 frame">&#9664;&#9664;</button>
-                    <button class="btn btn-outline btn-sm" id="mixOffsetLeftBtn" title="-1 sec">&#9664;</button>
-                    <input type="range" id="mixOffsetSlider" min="-600" max="600" step="0.01" value="0" style="width:120px;">
-                    <span id="mixOffsetVal" style="font-size:0.75rem;color:var(--text);width:56px;">0.00s</span>
-                    <button class="btn btn-outline btn-sm" id="mixOffsetRightBtn" title="+1 sec">&#9654;</button>
-                    <button class="btn btn-outline btn-sm" id="mixOffsetFineRightBtn" title="+1 frame">&#9654;&#9654;</button>
-                    <button class="btn btn-outline btn-sm" id="mixAutoSyncBtn" style="margin-left:8px;">Auto Sync</button>
-                    <span id="mixSyncStatus" style="font-size:0.75rem;color:var(--text-muted);"></span>
-                </div>
-                <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-                    <button class="btn btn-outline btn-sm" id="mixExportBtn" style="background:var(--accent);color:#fff;border-color:var(--accent);">Export Video</button>
-                    <span id="mixExportProgress" style="display:none;font-size:0.8rem;color:var(--accent);"></span>
-                </div>
-            </div>
-        </div>
 
         <!-- Cut Video panel -->
         <div id="cutPanel" class="card" style="display:none;">
@@ -133,6 +62,7 @@
                     <button class="btn btn-outline btn-sm" id="cutEndFineRight" title="+1 frame">&#9654;</button>
                 </div>
                 <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                    <button class="btn btn-outline btn-sm" id="cutTestBtn" title="Jump to 3 seconds before the cut (S)">Test</button>
                     <button class="btn btn-outline btn-sm" id="cutExportBtn" style="background:var(--accent);color:#fff;border-color:var(--accent);">Export Video</button>
                     <span id="cutExportProgress" style="display:none;font-size:0.8rem;color:var(--accent);"></span>
                 </div>
@@ -173,39 +103,6 @@
                 <button class="btn btn-outline btn-sm" id="speedUpBtn" title="Increase speed (↑)">+</button>
                 <button class="btn btn-outline btn-sm" id="speedResetBtn" title="Reset speed (R)">Reset</button>
             </div>
-            <div class="compare-video-b-area" id="videoBArea">
-                <h2 style="font-size:1rem;margin-bottom:8px;color:var(--text-muted);">Video B</h2>
-                <div class="fs-container" id="fsContainerB">
-                    <div class="video-wrap" id="videoWrapB">
-                        <video id="videoPlayerB" playsinline style="background:#000;min-height:200px;"></video>
-                    </div>
-                    <div class="video-overlay" id="videoOverlayB">
-                        <span class="ctrl-time" id="timeDisplayB">0:00</span>
-                        <span class="ctrl-sep">/</span>
-                        <span class="ctrl-time ctrl-time-muted" id="durationDisplayB">0:00</span>
-                        <div class="seek-bar" id="seekBarB">
-                            <div class="seek-track"></div>
-                            <div class="seek-buffered" id="seekBufferedB"></div>
-                            <div class="seek-progress" id="seekProgressB"></div>
-                            <input type="range" class="seek-input" id="seekInputB" min="0" max="1000" step="1" value="0" title="Video B seek">
-                            <div class="seek-tooltip" id="seekTooltipB">0:00</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="compare-controls" id="compareControls">
-                <span style="font-size:0.85rem;color:var(--text-muted);">Sync Offset:</span>
-                <button class="btn btn-outline btn-sm" id="offsetLeftBtn" title="Nudge offset left">&#9664;&#9664;</button>
-                <button class="btn btn-outline btn-sm" id="offsetFineLeftBtn" title="Fine nudge left (1 frame)" style="font-size:0.7rem;padding:4px 6px;">&#9664;</button>
-                <input type="range" class="compare-offset-slider" id="syncOffsetSlider" min="-180" max="180" step="0.1" value="0">
-                <button class="btn btn-outline btn-sm" id="offsetFineRightBtn" title="Fine nudge right (1 frame)" style="font-size:0.7rem;padding:4px 6px;">&#9654;</button>
-                <button class="btn btn-outline btn-sm" id="offsetRightBtn" title="Nudge offset right">&#9654;&#9654;</button>
-                <span class="compare-offset-val" id="syncOffsetVal">0.00s</span>
-                <button class="btn btn-outline btn-sm" id="autoSyncBtn" title="Auto-sync using audio fingerprinting">Auto Sync</button>
-                <button class="btn btn-outline btn-sm" id="mirrorBtnB" title="Mirror Video B">&#x1f504;</button>
-                <span id="syncStatus" style="font-size:0.8rem;color:var(--text-muted);"></span>
-            </div>
-            <div style="display:none;text-align:center;margin-top:8px;font-size:0.75rem;color:var(--text-muted);" class="compare-hint">&#128470; Press F for fullscreen — scroll to zoom, click &amp; drag to pan each video independently</div>
             <div class="video-info" id="videoInfo"></div>
         </div>
         <div class="sidebar-stack">
@@ -260,10 +157,7 @@
     <script src="js/07-markers.js"></script>
     <script src="js/08-keybinds.js"></script>
     <script src="js/09-loop.js"></script>
-    <script src="js/11-autosync.js"></script>
-    <script src="js/12-compare.js"></script>
-    <script src="js/14-youtube.js"></script>
-    <script src="js/15-audio-overlay.js"></script>
+        <script src="js/vendor/mediabunny.js"></script>
     <script src="js/16-cut-tool.js"></script>
     <script src="js/13-init.js"></script>
 </script>

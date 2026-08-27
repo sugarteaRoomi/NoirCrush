@@ -51,11 +51,8 @@ videoPlayer.addEventListener('loadedmetadata', updateTimeDisplay);
 videoPlayer.addEventListener('play', updatePlayPauseBtn);
 videoPlayer.addEventListener('pause', updatePlayPauseBtn);
 videoPlayer.addEventListener('loadedmetadata', updatePlayPauseBtn);
-videoPlayer.addEventListener('loadedmetadata', function() { if (isCompareMode && videoBLoaded) updateOffsetSliderRange(); });
 
 playPauseBtn.addEventListener('click', function() {
-    if (isCompareMode && videoBLoaded) { syncPlayPause(); return; }
-    if (typeof syncMixPlayPause === 'function' && mixControls && mixControls.style.display === 'block') { syncMixPlayPause(); return; }
     var v = getActiveVideo();
     if (v.paused) v.play(); else v.pause();
 });
@@ -75,24 +72,6 @@ function seekToPct(pct) {
 }
 
 seekBar.addEventListener('click', function(e) {
-    if (isCompareMode && videoBLoaded) {
-        var dur = videoPlayer.duration || 0;
-        if (!dur) return;
-        var rect = seekBar.getBoundingClientRect();
-        var pct = (e.clientX - rect.left) / rect.width;
-        pct = Math.max(0, Math.min(1, pct));
-        syncSeek(pct * dur);
-        return;
-    }
-    if (typeof syncMixSeek === 'function' && mixControls && mixControls.style.display === 'block') {
-        var dur = videoPlayer.duration || 0;
-        if (!dur) return;
-        var rect = seekBar.getBoundingClientRect();
-        var pct = (e.clientX - rect.left) / rect.width;
-        pct = Math.max(0, Math.min(1, pct));
-        syncMixSeek(pct * dur);
-        return;
-    }
     var v = getActiveVideo();
     var dur = v.duration || 0;
     if (!dur) return;
@@ -103,16 +82,6 @@ seekBar.addEventListener('click', function(e) {
 });
 
 seekInput.addEventListener('input', function() {
-    if (isCompareMode && videoBLoaded) {
-        var dur = videoPlayer.duration || 0;
-        if (dur > 0) syncSeek((parseInt(seekInput.value, 10) / 1000) * dur);
-        return;
-    }
-    if (typeof syncMixSeek === 'function' && mixControls && mixControls.style.display === 'block') {
-        var dur = videoPlayer.duration || 0;
-        if (dur > 0) syncMixSeek((parseInt(seekInput.value, 10) / 1000) * dur);
-        return;
-    }
     seekToPct(parseInt(seekInput.value, 10) / 1000);
 });
 
@@ -139,27 +108,6 @@ videoPlayer.addEventListener('dblclick', function(e) {
 fullscreenBtn.addEventListener('click', function() {
     if (document.fullscreenElement) {
         document.exitFullscreen();
-    } else if (isCompareMode && videoBLoaded) {
-        var ps = document.getElementById('playerSection');
-        // Hide non-video children
-        Array.from(ps.children).forEach(function(c) {
-            if (c !== fsContainer && c !== document.getElementById('videoBArea')) {
-                c._fsDisp = c.style.display;
-                c.style.display = 'none';
-            }
-        });
-        // Set up both halves with inline styles
-        fsContainer._fsCS = fsContainer.style.cssText;
-        fsContainer.style.cssText = 'display:flex;align-items:center;justify-content:center;flex:1;height:100%;background:#000;border-radius:0;overflow:hidden;margin:0;padding:0';
-        var ba = document.getElementById('videoBArea');
-        ba._fsCS = ba.style.cssText;
-        ba.style.cssText = 'display:block;flex:1;height:100%;background:#000;margin:0;padding:0';
-        ba.querySelector('h2').style.display = 'none';
-        var cb = document.getElementById('fsContainerB');
-        cb._fsCS = cb.style.cssText;
-        cb.style.cssText = 'display:flex;align-items:center;justify-content:center;width:100%;height:100%;background:#000;border-radius:0;overflow:hidden';
-        // Request fullscreen
-        ps.requestFullscreen ? ps.requestFullscreen() : ps.webkitRequestFullscreen();
     } else {
         (fsContainer.requestFullscreen || fsContainer.webkitRequestFullscreen || fsContainer.msRequestFullscreen).call(fsContainer);
     }
@@ -208,7 +156,6 @@ document.addEventListener('fullscreenchange', function() {
 var _panMoved = false;
 function _onVideoClick(e) {
     if (_panMoved) { _panMoved = false; return; }
-    if (isCompareMode && videoBLoaded) { syncPlayPause(); return; }
     var v = getActiveVideo();
     if (v.paused) v.play(); else v.pause();
 }
@@ -231,11 +178,6 @@ function applyZoomTransform() {
 function _zoomTarget() {
     if (!document.fullscreenElement) return null;
     var el = document.fullscreenElement;
-    // In compare mode, fullscreen is on playerSection, find which child the cursor is over
-    if (el === document.getElementById('playerSection')) {
-        var b = document.getElementById('fsContainerB');
-        if (b && b.matches(':hover')) return { wrap: videoWrapB, container: b, mirror: isMirroredB };
-    }
     return { wrap: videoWrap, container: fsContainer, mirror: isMirrored };
 }
 

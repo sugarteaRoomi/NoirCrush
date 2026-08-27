@@ -5,7 +5,6 @@ function setSpeed(speed) {
     currentSpeed = Math.max(0.25, Math.min(2.0, speed));
     currentSpeed = Math.round(currentSpeed * 100) / 100;
     videoPlayer.playbackRate = currentSpeed;
-    if (videoBLoaded) videoPlayerB.playbackRate = currentSpeed;
     speedInput.value = currentSpeed.toFixed(2) + 'x';
     if (currentSpeed === 1.0) {
         speedInput.classList.remove('not-default');

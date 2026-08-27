@@ -54,9 +54,7 @@ function setPracticePanels(show) {
 let currentVideo = null;
 let currentObjectURL = null;
 let currentVideoBlob = null;
-let videoBBlob = null;
 let isMirrored = true;
-let isMirroredB = false;
 let isLooping = true;
 let currentSpeed = 1.0;
 let markers = {}; // key (string) → time (seconds)

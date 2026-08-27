@@ -124,9 +124,7 @@ keybindInputNum.addEventListener('keydown', function(e) {
 
 function jumpToSyncStart() {
     if (getActiveVideo().readyState < 1) return;
-    var targetTime = syncOffset < 0 ? -syncOffset : 0;
-    if (isCompareMode && videoBLoaded) { syncSeek(targetTime); }
-    else { seekToTime(targetTime); }
+    seekToTime(0);
 }
 
 function jumpToMarker(key) {
@@ -134,7 +132,7 @@ function jumpToMarker(key) {
     var targetTime;
     if (key === '0') {
         targetTime = 0;
-    } else if (key === 's' && isCompareMode && videoBLoaded) {
+    } else if (key === 's') {
         jumpToSyncStart();
         return;
     } else if (markers[key] != null) {
@@ -142,8 +140,7 @@ function jumpToMarker(key) {
     } else {
         return;
     }
-    if (isCompareMode && videoBLoaded) { syncSeek(targetTime); }
-    else { seekToTime(targetTime); }
+    seekToTime(targetTime);
 
     var row = keybindList.querySelector('.keybind-row[data-marker-key="' + CSS.escape(key) + '"]');
     if (row) {

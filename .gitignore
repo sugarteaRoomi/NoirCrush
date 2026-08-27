@@ -1,11 +1,2 @@
-videos/
-__pycache__/
-*.pyc
-build/
-dist/
-*.spec.bak
+node_modules/
 .DS_Store
-Thumbs.db
-*.log
-Dance Mirror.app/
-*.app
