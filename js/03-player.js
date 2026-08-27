@@ -136,19 +136,12 @@ document.addEventListener('fullscreenchange', function() {
         videoOverlay.classList.remove('hidden');
         fsContainer.classList.remove('cursor-hidden');
         clearTimeout(hideControlsTimer);
-        // Restore compare fullscreen styles
+        // Restore fullscreen styles
         var ps = document.getElementById('playerSection');
         if (ps) {
             Array.from(ps.children).forEach(function(c) { if (c._fsDisp !== undefined) { c.style.display = c._fsDisp; delete c._fsDisp; } });
         }
         if (fsContainer._fsCS !== undefined) { fsContainer.style.cssText = fsContainer._fsCS; delete fsContainer._fsCS; }
-        var ba = document.getElementById('videoBArea');
-        if (ba) {
-            if (ba._fsCS !== undefined) { ba.style.cssText = ba._fsCS; delete ba._fsCS; }
-            var h2 = ba.querySelector('h2'); if (h2) h2.style.display = '';
-        }
-        var cb = document.getElementById('fsContainerB');
-        if (cb && cb._fsCS !== undefined) { cb.style.cssText = cb._fsCS; delete cb._fsCS; }
     }
 });
 
@@ -225,7 +218,6 @@ function _onWheelZoom(e) {
     applyZoomTransform(t);
 }
 fsContainer.addEventListener('wheel', _onWheelZoom, { passive: false });
-document.getElementById('fsContainerB').addEventListener('wheel', _onWheelZoom, { passive: false });
 
 function _onPanStart(e) {
     if (!document.fullscreenElement) return;
@@ -242,7 +234,6 @@ function _onPanStart(e) {
     e.preventDefault();
 }
 fsContainer.addEventListener('mousedown', _onPanStart);
-document.getElementById('fsContainerB').addEventListener('mousedown', _onPanStart);
 
 document.addEventListener('mousemove', function(e) {
     if (!isPanning) return;

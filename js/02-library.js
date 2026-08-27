@@ -6,7 +6,6 @@
 //   saveLibraryVideo(file) -> name,
 //   deleteLibraryVideo(name),
 //   getLibraryFile(name) -> File,
-//   importServerVideo(name) -> name (clodhost-only convenience),
 //   formatFileSize(bytes), escapeHTML(str)
 
 var _libDirPromise = null;
@@ -87,16 +86,6 @@ async function getLibraryFile(name) {
     var dir = await _libDir();
     var fh = await dir.getFileHandle(name);
     return fh.getFile();
-}
-
-async function importServerVideo(name) {
-    var resp = await fetch('/api/video/' + encodeURIComponent(name));
-    if (!resp.ok) throw new Error('could not download the file');
-    var blob = await resp.blob();
-    var type = blob.type || 'video/mp4';
-    var saved = await saveLibraryVideo(new File([blob], name, { type: type }));
-    renderLibrary();
-    return saved;
 }
 
 async function renderLibrary() {

@@ -141,19 +141,6 @@ header p {
     align-items: flex-start;
 }
 .player-layout.active { display: flex; }
-/* Compare mode */
-.player-layout.compare-active .player-section-card { flex: 1 1 100%; max-width: 100%; }
-.player-layout.compare-active .sidebar-stack { flex: 0 0 220px; }
-.compare-videos { display: flex; gap: 12px; flex-wrap: wrap; }
-.compare-videos > div { flex: 1; min-width: 280px; }
-.compare-video-b-area { display: none; }
-.compare-active .compare-video-b-area { display: block; }
-.compare-controls { display: none; align-items: center; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
-.compare-active .compare-controls { display: flex; }
-.compare-active .compare-hint { display: block !important; }
-.compare-offset-slider { flex: 1; min-width: 120px; max-width: 300px; accent-color: var(--accent); }
-.compare-offset-val { font-size: 0.82rem; font-variant-numeric: tabular-nums; color: var(--text); min-width: 60px; }
-
 .player-layout .player-section-card { flex: 0 0 68%; min-width: 0; }
 .player-layout.sidebar-hidden .sidebar-stack { display: none; }
 .player-layout.sidebar-hidden .player-section-card { flex: 1 1 100%; max-width: 100%; }
@@ -204,7 +191,7 @@ header p {
     object-fit: contain;
     background: #000;
 }
-/* Compare mode fullscreen */
+/* Fullscreen */
 .player-section-card:fullscreen,
 .player-section-card:-webkit-full-screen {
     display: flex !important;
@@ -227,16 +214,8 @@ header p {
     max-height: 50px;
     border-radius: 0;
 }
-.player-section-card:fullscreen #videoOverlayB,
-.player-section-card:-webkit-full-screen #videoOverlayB,
-.player-section-card:fullscreen .compare-hint,
-.player-section-card:-webkit-full-screen .compare-hint {
-    display: none !important;
-}
 .player-section-card:fullscreen #fsContainer,
-.player-section-card:-webkit-full-screen #fsContainer,
-.player-section-card:fullscreen #fsContainerB,
-.player-section-card:-webkit-full-screen #fsContainerB {
+.player-section-card:-webkit-full-screen #fsContainer {
     overflow: visible;
 }
 .player-section-card:fullscreen .video-wrap,

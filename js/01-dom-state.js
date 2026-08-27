@@ -1,7 +1,6 @@
 // ============================================================
 // DOM Refs
 // ============================================================
-const openArea = document.getElementById('openArea');
 const videoList = document.getElementById('videoList');
 const playerLayout = document.getElementById('playerLayout');
 const fsContainer = document.getElementById('fsContainer');
